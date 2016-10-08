@@ -1,14 +1,15 @@
 import sys
 import re
 
-def main(argv):
-    vowels = 'aeiou'
-    line = sys.stdin.readln()
-    pattern = re.compile('a-zA-Z0-9+')
+def main(args):
+    vowel_pattern = re.compile('[aeiouy]')
+    pattern = re.compile('\S+')
+    line = sys.stdin.readline()
+
     while line:
         for word in pattern.findall(line):
-            print(len(findall('[%s]' % vowels, word) + '/t' + '1')
-        line = sys.stdin.readln()
+            print (str(len(vowel_pattern.findall(word))) + '\t' + '1')
+        line = sys.stdin.readline()
 
 if __name__ == '__main__':
     main(sys.argv)
