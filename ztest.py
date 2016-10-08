@@ -2,11 +2,11 @@ import sys
 import re
 
 vowel_pattern = re.compile('[aeiou]')
-pattern = re.compile('[a-zA-Z0-9]+')
-p = re.compile('\d+')
+pattern = re.compile('\S+')
+
 
 line = sys.stdin.readline()
-print (re.split('[\\s\\n]+', line))
+
 while line:
 	
     for word in pattern.findall(line):
