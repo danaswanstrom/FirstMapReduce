@@ -36,7 +36,8 @@ def main(args):
     line = sys.stdin.readline()
 
     while line:
-        pairing = str(line)
+        #pairing = str(line)
+        pairing = "2:13!4"
 
         # Strip the ':' and the '!' to get the digits only as a string
         pairing_digits = re.sub('[:!]', '', pairing)
@@ -46,17 +47,24 @@ def main(args):
 
         # Get all information left of the '!'
         pairing_left = re.sub('[:]', '', (pairing.split('!')[0]))
-        pairing_left_regex = "[" + pairing_left + "]"
 
-        # Length of digits will determine max length of exported key
-        # Max export key will be all 9's and the same length. Max as a int
+        # Find the maximum digit value in the pairing information
+        max_digit_value = max([int(x) for x in pairing_digits])
+
         digits_len = len(pairing_digits)
-        max_export_key = int('9' * digits_len)
+
+        # The max export key will never be larger than a repitition of the max digit
+        max_export_key = int(str(max_digit_value) * digits_len)
+        export_key_illegal_digits = digits_larger_than_number(max_digit_value)
+        export_key_illegal_digits_regex = "[" + str(export_key_illegal_digits) + "]"
 
         # Exported keys must be at least two digits and unique digits.
         # We will start 12 will be our first possiblility
         # !!!! Might be able to minimize loop by thinking about where the export key could really start !!!
         export_key = 12
+
+
+
         line = sys.stdin.readline()
 
 
