@@ -8,10 +8,12 @@ def digits_larger_than_number(number):
 
     Returns: a string of all the digits larger than the input
     """
-    digit_string = ''
+
+
+    digit_string = '0'
     number = int(number)
 
-    while int(number) < 9:
+    while number < 9:
         number += 1
         digit_string = digit_string + str(number)
     return digit_string
@@ -56,7 +58,8 @@ def main(args):
 
     # The max export key will never be larger than a repitition of the max digit
     max_export_key = int(str(max_digit_value) * digits_len)
-    export_key_illegal_digits = digits_larger_than_number(max_digit_value)
+    # Next line uses the extra digits and adds a 0 because 0 will also never be used
+    export_key_illegal_digits = digits_larger_than_number(max_digit_value) + '0'
     export_key_illegal_digits_regex = "[" + str(export_key_illegal_digits) + "]"
 
     # Exported keys must be at least two digits and unique digits.
