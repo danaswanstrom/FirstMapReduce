@@ -63,6 +63,19 @@ def main(args):
         # !!!! Might be able to minimize loop by thinking about where the export key could really start !!!
         export_key = 12
 
+        while export_key <= max_export_key:
+            # When creating export keys our pairing_key must be in the number
+            # Export keys will also have no repeating numbers so we test for that second
+            if re.search(export_key_illegal_digits_regex, str(export_key)):
+                export_key += 1
+            else:
+                if pairing_key in str(export_key) and len(str(export_key)) == len(set(str(export_key))):
+                    # The export value of the mapper is the pairing_left
+                    export_value = pop_out_string(pop_out_this=export_key, original_string=pairing_left)
+
+                    print((''.join(sorted(str(export_key)))) + '\t' + (''.join(sorted(str(export_value)))))
+            export_key += 1
+
 
 
         line = sys.stdin.readline()
