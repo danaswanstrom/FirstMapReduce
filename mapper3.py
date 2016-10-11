@@ -40,6 +40,7 @@ def main(args):
 
     while line:
         pairing = str(line)
+        pairing = pairing.replace(' ','')
 
 
         # Strip the ':' and the '!' to get the digits only as a string
