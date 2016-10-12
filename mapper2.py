@@ -10,6 +10,8 @@ def main(args):
         for word in pattern.findall(line):
             all_vowels_str = ''.join(vowel_pattern.findall(word))
             all_vowels_str = all_vowels_str.lower()
+            if all_vowels_str == '':
+                all_vowels_str = '_'
             print (str(''.join(sorted(all_vowels_str))) + '\t' + '1')
         line = sys.stdin.readline()
 
