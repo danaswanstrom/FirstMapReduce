@@ -78,7 +78,10 @@ def main(args):
                     # The export value of the mapper is the pairing_left
                     export_value = pop_out_string(pop_out_this=export_key, original_string=pairing_left)
 
-                    print((''.join(sorted(str(export_key)))) + '\t' + (''.join(sorted(str(export_value)))))
+                    if export_value == '':
+                        print((''.join(sorted(str(export_key)))) + '\t' + '0')
+                    else:
+                        print((''.join(sorted(str(export_key)))) + '\t' + (''.join(sorted(str(export_value)))))
                     # Debug line that does not sort print(str(export_key) + '\t' + (''.join(sorted(str(export_value)))))
                 export_key += 1
 
