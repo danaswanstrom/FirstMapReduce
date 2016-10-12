@@ -4,7 +4,7 @@ current_combination = None
 current_recommendation = '0123456789'
 
 for line in sys.stdin:
-    line = line.strip()
+    line = '12	345' #line.strip()
     combination, recommendation = line.split('\t', 1)
     if current_combination == combination:
         current_recommendation = ''.join(sorted(set(recommendation) & set(current_recommendation)))
