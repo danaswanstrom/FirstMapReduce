@@ -55,6 +55,7 @@ def main(args):
 
         # Get all the digits other than the pairing key
         pairing_minus_key = pairing_digits.replace(pairing_key, '')
+        # Need to strip any white space from the list of digits
         pairing_minus_key = pairing_minus_key.strip()
 
         for i in range(1, (len(pairing_minus_key) + 1)):
