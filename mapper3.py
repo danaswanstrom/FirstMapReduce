@@ -1,5 +1,6 @@
 import sys
 import re
+from itertools import permutations
 
 def digits_larger_than_number(number):
     """Function creates a string of digits larger a given digit.
@@ -44,7 +45,7 @@ def main(args):
 
 
         # Strip the ':' and the '!' to get the digits only as a string
-        pairing_digits = re.sub('[:!]', '', pairing)
+        pairing_digits = ''.join(sorted(re.sub('[:!]', '', pairing)))
 
         # Get key of pairing as a string. It is before the :
         pairing_key = pairing.split(':')[0]
@@ -52,44 +53,22 @@ def main(args):
         # Get all information left of the '!'
         pairing_left = re.sub('[:]', '', (pairing.split('!')[0]))
 
-        # Find the maximum digit value in the pairing information
-        max_digit_value = max([x for x in pairing_digits])
+        # Get all the digits other than the pairing key
+        pairing_minus_key = pairing_digits.replace(pairing_key, '')
+        # Need to strip any white space from the list of digits
+        pairing_minus_key = pairing_minus_key.strip()
 
-        digits_len = len(pairing_digits)
-
-        # The max export key will never be larger than a repitition of the max digit
-        max_export_key = int(str(max_digit_value) * digits_len)
-        # Next line uses the extra digits and adds a 0 because 0 will also never be used
-        export_key_illegal_digits = digits_larger_than_number(max_digit_value) + '0'
-        export_key_illegal_digits_regex = "[" + str(export_key_illegal_digits) + "]"
-
-        # Exported keys must be at least two digits and unique digits.
-        # We will start 12 will be our first possiblility
-        # !!!! Might be able to minimize loop by thinking about where the export key could really start !!!
-        export_key = 10
-
-        while export_key <= max_export_key:
-            # When creating export keys our pairing_key must be in the number
-            # Export keys will also have no repeating numbers so we test for that second
-            if re.search(export_key_illegal_digits_regex, str(export_key)):
-                export_key += 1
-            else:
-                if pairing_key == str(export_key)[0] and len(str(export_key)) == len(set(str(export_key))):
-                    # The export value of the mapper is the pairing_left
-                    export_value = pop_out_string(pop_out_this=export_key, original_string=pairing_left)
-
-                    if export_value == '':
-                        print((''.join(sorted(str(export_key)))) + '\t' + '0')
-                    else:
-                        print((''.join(sorted(str(export_key)))) + '\t' + (''.join(sorted(str(export_value)))))
-                    # Debug line that does not sort print(str(export_key) + '\t' + (''.join(sorted(str(export_value)))))
-                export_key += 1
-
-
+        for i in range(1, (len(pairing_minus_key) + 1)):
+            perms_list = [(pairing_key + ''.join(p)) for p in permutations(pairing_minus_key, i)]
+            for export_key in perms_list:
+                export_value = pop_out_string(pop_out_this=export_key, original_string=pairing_left)
+                # This next if:else puts a 0 as a place holder for an empty string. Reducer will get rid of it
+                if export_value == '':
+                    print((''.join(sorted(str(export_key)))) + '\t' + '0')
+                else:
+                    print((''.join(sorted(str(export_key)))) + '\t' + (''.join(sorted(str(export_value)))))
 
         line = sys.stdin.readline()
-
-
 
 if __name__ == '__main__':
     main(sys.argv)
