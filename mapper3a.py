@@ -55,8 +55,9 @@ def main(args):
 
         # Get all the digits other than the pairing key
         pairing_minus_key = pairing_digits.replace(pairing_key, '')
+        pairing_minus_key = pairing_minus_key.strip()
 
-        for i in range(2, (len(pairing_minus_key) + 1)):
+        for i in range(1, (len(pairing_minus_key) + 1)):
             perms_list = [(pairing_key + ''.join(p)) for p in permutations(pairing_minus_key, i)]
             for export_key in perms_list:
                 export_value = pop_out_string(pop_out_this=export_key, original_string=pairing_left)
